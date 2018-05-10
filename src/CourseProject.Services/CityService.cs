@@ -10,9 +10,9 @@ namespace CourseProject.Services
 {
     public class CityService 
     {
-        private readonly IBaseRepository<City> repository;
+        private readonly CityRepository repository;
 
-        public CityService(IBaseRepository<City> repo)
+        public CityService(CityRepository repo)
         {
             repository = repo;
         }

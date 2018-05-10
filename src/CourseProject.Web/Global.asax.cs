@@ -19,7 +19,7 @@ namespace CourseProject.Web
         {
             var container = new UnityContainer();
 
-            container.RegisterType<IBaseRepository<City>, CityRepository>();
+            container.RegisterType<CityRepository>();
             
             container.RegisterType<CityService>();
 
