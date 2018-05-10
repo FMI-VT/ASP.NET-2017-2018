@@ -4,7 +4,7 @@
 
     class RestaurantRepository : BaseRepository<Restaurant>
     {
-        public override void Save(Restaurant restaurant)
+        public void Save(Restaurant restaurant)
         {
             if (restaurant.Id == 0)
             {

@@ -4,7 +4,7 @@
 
     class LocationRepository : BaseRepository<Location>
     {
-        public override void Save(Location location)
+        public void Save(Location location)
         {
             if (location.Id == 0)
             {
