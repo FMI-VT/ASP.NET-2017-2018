@@ -1,64 +1,48 @@
 ﻿namespace CourseProject.DataAccess.Repositories
 {
-    using CourseProject.DB.Entities;
     using System;
-    using System.Collections.Generic;
+    using System.Data;
     using System.Data.Entity;
+    using System.Linq.Expressions;
     using System.Linq;
 
-    public abstract class BaseRepository<T> : IBaseRepository<T>
-        where T : BaseEntity
+    public abstract class BaseRepository<C, T> :
+    IBaseRepository<T> where T : class where C : DbContext, new()
     {
-        protected CourseProjectDbContext Context;
+        public C Context { get; set; } = new C();
 
-        protected DbSet<T> DBSet
+        public virtual IQueryable<T> GetAll()
         {
-            get
-            {
-                return Context.Set<T>();
-            }
+
+            IQueryable<T> query = Context.Set<T>();
+            return query;
         }
 
-        public BaseRepository() =>
-            // this constructor is automatically invoked when the default child constructor is called
-            Context = new CourseProjectDbContext();
-
-        public List<T> GetAll() => Context.Set<T>().ToList();
-        public T GetByID(int id) => Context.Set<T>().Find(id);
-        public void Create(T item)
+        public IQueryable<T> FindBy(Expression<Func<T, bool>> predicate)
         {
-            Context.Set<T>().Add(item);
+
+            IQueryable<T> query = Context.Set<T>().Where(predicate);
+            return query;
+        }
+
+        public virtual void Add(T entity)
+        {
+            Context.Set<T>().Add(entity);
+        }
+
+        public virtual void Delete(T entity)
+        {
+            Context.Set<T>().Remove(entity);
+        }
+
+        public virtual void Edit(T entity)
+        {
+            Context.Entry(entity).State = EntityState.Modified;
+        }
+
+        public virtual void Save()
+        {
             Context.SaveChanges();
-        }
-        public void Update(T item, Func<T, bool> findByIDPredecate)
-        {
-            var local = Context.Set<T>()
-                         .Local
-                         .FirstOrDefault(findByIDPredecate);// (f => f.ID == item.ID);
-            if (local != null)
-            {
-                Context.Entry(local).State = EntityState.Detached;
-            }
-
-            Context.Entry(item).State = EntityState.Modified;
-
-            //    Context.Entry(category).State = EntityState.Modified;
-            //var entry = Context.Entry(category);
-            //Context.Categories.Attach(category);
-            //entry.State = EntityState.Modified;
-            Context.SaveChanges();
-        }
-        public bool DeleteByID(int id)
-        {
-            bool isDeleted = false;
-            T dbItem = Context.Set<T>().Find(id);
-            if (dbItem != null)
-            {
-                Context.Set<T>().Remove(dbItem);
-                int recordsChanged = Context.SaveChanges();
-                isDeleted = recordsChanged > 0;
-            }
-            return isDeleted;
         }
     }
 }

@@ -63,6 +63,11 @@
     <Compile Include="Repositories\BaseRepository.cs" />
     <Compile Include="Repositories\CityRepository.cs" />
     <Compile Include="Repositories\IBaseRepository.cs" />
+    <Compile Include="Repositories\ICityRepository.cs" />
+    <Compile Include="Repositories\IImageRepository.cs" />
+    <Compile Include="Repositories\ILocationRepository.cs" />
+    <Compile Include="Repositories\ImageRepository.cs" />
+    <Compile Include="Repositories\IRestaurantRepository.cs" />
     <Compile Include="Repositories\LocationRepository.cs" />
     <Compile Include="Repositories\RestaurantRepository.cs" />
   </ItemGroup>

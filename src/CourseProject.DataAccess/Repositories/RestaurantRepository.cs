@@ -1,19 +1,14 @@
 ﻿namespace CourseProject.DataAccess.Repositories
 {
     using CourseProject.DB.Entities;
+    using System.Linq;
 
-    class RestaurantRepository : BaseRepository<Restaurant>
+    public class RestaurantRepository : BaseRepository<CourseProjectDbContext, Restaurant>, IRestaurantRepository
     {
-        public void Save(Restaurant restaurant)
+        public Restaurant GetSingle(int restaurantId)
         {
-            if (restaurant.Id == 0)
-            {
-                Create(restaurant);
-            }
-            else
-            {
-                Update(restaurant, item => item.Id == restaurant.Id);
-            }
+            var query = GetAll().FirstOrDefault(x => x.Id == restaurantId);
+            return query;
         }
     }
 }
