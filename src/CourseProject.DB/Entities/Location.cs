@@ -24,6 +24,7 @@
         [Required, ForeignKey("CityId")]
         public virtual City City { get; }
 
-        public virtual ICollection<Restaurant> Restaurants { get; }
+        [Required]
+        public virtual ICollection<Restaurant> Restaurants { get; set; }
     }
 }

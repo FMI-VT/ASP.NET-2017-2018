@@ -19,6 +19,7 @@
         [Required, StringLength(20)]
         public string CountryName { get; set; }
 
-        public virtual ICollection<Location> Locations { get; }
+        [Required]
+        public virtual ICollection<Location> Locations { get; set; }
     }
 }
