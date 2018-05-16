@@ -1,5 +1,6 @@
 ﻿namespace CourseProject.DB.Entities
 {
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
@@ -18,13 +19,18 @@
         [Required, StringLength(20)]
         public string WorkingHours { get; set; }
 
-        [Required, DataType(DataType.Currency)]
-        public decimal ReservationFee { get; set; }
+        [Required]
+        public string PhoneNumber { get; set; }
+
+        public bool SuitableForKids { get; set; }
 
         [Required]
         public int LocationId { get; set; }
 
         [Required, ForeignKey("LocationId")]
-        public virtual Location Location { get; }
+        public virtual Location Location { get; set; }
+
+        [Required]
+        public virtual ICollection<Image> Images { get; set; }
     }
 }
