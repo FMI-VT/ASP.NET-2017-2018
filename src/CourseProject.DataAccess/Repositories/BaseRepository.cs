@@ -7,9 +7,11 @@
     using System.Linq;
 
     public abstract class BaseRepository<C, T> :
-    IBaseRepository<T> where T : class where C : DbContext, new()
+    IBaseRepository<T>, IDisposable where T : class where C : DbContext, new()
     {
         public C Context { get; set; } = new C();
+
+        protected bool disposed = false;
 
         public virtual IQueryable<T> GetAll()
         {
@@ -43,6 +45,24 @@
         public virtual void Save()
         {
             Context.SaveChanges();
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposed)
+            {
+                if (disposing)
+                {
+                    Context.Dispose();
+                }
+            }
+            this.disposed = true;
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
     }
 }
