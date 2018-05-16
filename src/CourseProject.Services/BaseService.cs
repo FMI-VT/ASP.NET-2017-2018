@@ -6,8 +6,6 @@ using System.Threading.Tasks;
 
 namespace CourseProject.Services
 {
-    using CourseProject.DataAccess.Repositories;
-    using CourseProject.DB.Entities;
 
     public class BaseService<T> : IBaseService<T>
     {
