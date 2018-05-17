@@ -56,6 +56,10 @@
     <Compile Include="Migrations\201805081130388_AddExtraColumnsToCity.Designer.cs">
       <DependentUpon>201805081130388_AddExtraColumnsToCity.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201805170921068_AddImages.cs" />
+    <Compile Include="Migrations\201805170921068_AddImages.Designer.cs">
+      <DependentUpon>201805170921068_AddImages.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\CustomSqlServerMigrationSqlGenerator.cs" />
     <Compile Include="MyConfiguration.cs" />
@@ -80,6 +84,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201805081130388_AddExtraColumnsToCity.resx">
       <DependentUpon>201805081130388_AddExtraColumnsToCity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805170921068_AddImages.resx">
+      <DependentUpon>201805170921068_AddImages.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

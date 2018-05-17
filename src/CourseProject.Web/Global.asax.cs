@@ -18,14 +18,7 @@ namespace CourseProject.Web
         private IUnityContainer ConfigureDependencies()
         {
             var container = new UnityContainer();
-
-            container.RegisterType<CityRepository>();
-            container.RegisterType<LocationRepository>();
-            container.RegisterType<RestaurantRepository>();
-            container.RegisterType<ImageRepository>();
-
-            container.RegisterType<CityService>();
-
+            
             return container;
         }
 

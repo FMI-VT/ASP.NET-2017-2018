@@ -8,53 +8,60 @@
     using System.Collections.Generic;
 
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
-
     {
         protected readonly DbContext Context;
+        protected readonly DbSet<TEntity> Set;
 
         public Repository(DbContext context)
         {
             Context = context;
+            Set = context.Set<TEntity>();
         }
 
         public TEntity Get(int id)
         {
-            return Context.Set<TEntity>().Find(id);
+            return Set.Find(id);
         }
 
         public IEnumerable<TEntity> GetAll()
         {
-            return Context.Set<TEntity>().ToList();
+            return Set.ToList();
         }
 
         public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
         {
-            return Context.Set<TEntity>().Where(predicate);
+            return Set.Where(predicate);
         }
 
         public TEntity SingleOrDefault(Expression<Func<TEntity, bool>> predicate)
         {
-            return Context.Set<TEntity>().SingleOrDefault(predicate);
+            return Set.SingleOrDefault(predicate);
         }
 
         public void Add(TEntity entity)
         {
-            Context.Set<TEntity>().Add(entity);
+            Set.Add(entity);
         }
 
         public void AddRange(IEnumerable<TEntity> entities)
         {
-            Context.Set<TEntity>().AddRange(entities);
+            Set.AddRange(entities);
+        }
+
+        public void Update(TEntity entity)
+        {
+            Set.Attach(entity);
+            Context.Entry(entity).State = EntityState.Modified;
         }
 
         public void Remove(TEntity entity)
         {
-            Context.Set<TEntity>().Remove(entity);
+            Set.Remove(entity);
         }
 
         public void RemoveRange(IEnumerable<TEntity> entities)
         {
-            Context.Set<TEntity>().RemoveRange(entities);
+            Set.RemoveRange(entities);
         }
     }
 }

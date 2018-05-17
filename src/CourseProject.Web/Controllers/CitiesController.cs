@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using CourseProject.DataAccess;
+using CourseProject.DataAccess.Repositories;
 using CourseProject.DB.Entities;
 using CourseProject.Services;
 using CourseProject.Web.Models;
@@ -11,16 +13,16 @@ namespace CourseProject.Web.Controllers
 {
     public class CitiesController : Controller
     {
-        private readonly CityService service;
-        public CitiesController(CityService svc)
+        private readonly UnitOfWork uow;
+        public CitiesController(CourseProjectDbContext context)
         {
-            service = svc;
+            uow = new UnitOfWork(context);
         }
 
         // GET: Cities
         public ActionResult Index()
         {
-            IEnumerable<City> cities = service.GetAll();
+            IEnumerable<City> cities = uow.CityRepository.GetAll();
 
             List<CityViewModel> model = new List<CityViewModel>();
             foreach(City city in cities)
@@ -35,7 +37,15 @@ namespace CourseProject.Web.Controllers
         // GET: Cities/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            City city = uow.CityRepository.Get(id);
+            CityViewModel model = new CityViewModel(city);
+
+            IEnumerable<Location> Locations = 
+                uow.LocationRepository.Find(x => x.CityId == id);
+
+            ViewBag.Locations = Locations;
+
+            return View(model);
         }
 
         // GET: Cities/Create
@@ -95,6 +105,23 @@ namespace CourseProject.Web.Controllers
             try
             {
                 // TODO: Add delete logic here
+
+                City city = uow.CityRepository.Get(id);
+
+                foreach (Location location in city.Locations)
+                {
+                    foreach(Restaurant restaurant in location.Restaurants)
+                    {
+                        uow.ImageRepository.RemoveRange(restaurant.Images);
+                        uow.RestaurantRepository.Remove(restaurant);
+                    }
+
+                    uow.LocationRepository.Remove(location);
+                }
+                
+                uow.CityRepository.Remove(city);
+
+                uow.SaveChanges();
 
                 return RedirectToAction("Index");
             }

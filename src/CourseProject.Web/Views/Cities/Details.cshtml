@@ -1,0 +1,79 @@
+﻿@model CourseProject.Web.Models.CityViewModel
+
+@{
+    ViewBag.Title = "View";
+}
+
+<h2>View</h2>
+
+<div>
+    <h4>City</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MunicipalityName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MunicipalityName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DistrictName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DistrictName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CountryName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CountryName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UpdatedTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UpdatedTime)
+        </dd>
+
+    </dl>
+
+    @if (ViewBag.Locations.Any())
+    {
+    <h4>City</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        @foreach(var location in ViewBag.Locations)
+        {
+            <dt>Име: </dt>
+            <db>@location.Name</db>
+        }
+    </dl>
+    }
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
