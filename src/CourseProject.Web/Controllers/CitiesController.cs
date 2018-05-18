@@ -123,6 +123,17 @@ namespace CourseProject.Web.Controllers
 
                 uow.SaveChanges();
 
+                IEnumerable<City> cities = uow.CityRepository.GetAll();
+
+                List<CityViewModel> model = new List<CityViewModel>();
+                foreach (City oldcity in cities)
+                {
+                    CityViewModel cityModel = new CityViewModel(oldcity);
+                    model.Add(cityModel);
+                }
+
+                return View(model);
+
                 return RedirectToAction("Index");
             }
             catch

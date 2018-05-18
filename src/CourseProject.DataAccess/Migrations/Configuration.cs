@@ -1,8 +1,9 @@
 namespace CourseProject.DataAccess.Migrations
 {
     using System.Data.Entity.Migrations;
+    using CourseProject.DB.Entities;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<CourseProject.DataAccess.CourseProjectDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<CourseProjectDbContext>
     {
         public Configuration()
         {
@@ -10,19 +11,21 @@ namespace CourseProject.DataAccess.Migrations
             SetSqlGenerator("System.Data.SqlClient", new CustomSqlServerMigrationSqlGenerator());
         }
 
-        protected override void Seed(CourseProject.DataAccess.CourseProjectDbContext context)
+        protected override void Seed(CourseProjectDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data.
-
             context.Cities.AddOrUpdate(
-                new DB.Entities.City { Id = 1, Name = "Велико Търново", MunicipalityName = "Велико Търново", DistrictName = "Велико Търново", CountryName = "България" },
-                new DB.Entities.City { Id = 2, Name = "София", MunicipalityName = "София", DistrictName = "София", CountryName = "България" },
-                new DB.Entities.City { Id = 3, Name = "Варна", MunicipalityName = "Варна", DistrictName = "Варна", CountryName = "България" },
-                new DB.Entities.City { Id = 4, Name = "Бургас", MunicipalityName = "Бургас", DistrictName = "Бургас", CountryName = "България" }
+                new City { Id = 1, Name = "Велико Търново", MunicipalityName = "Велико Търново", DistrictName = "Велико Търново", CountryName = "България" },
+                new City { Id = 2, Name = "Пловдив", MunicipalityName = "Пловдив", DistrictName = "Пловдив", CountryName = "България"},
+                new City { Id = 3, Name = "София", MunicipalityName = "София", DistrictName = "София", CountryName = "България" },
+                new City { Id = 4, Name = "Варна", MunicipalityName = "Варна", DistrictName = "Варна", CountryName = "България" },
+                new City { Id = 5, Name = "Бургас", MunicipalityName = "Бургас", DistrictName = "Бургас", CountryName = "България" }
             );
+
+            context.SaveChanges();
         }
     }
 }

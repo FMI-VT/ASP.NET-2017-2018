@@ -6,17 +6,18 @@
     using System.Data;
     using System.Data.Entity.Infrastructure;
     using System.Data.Common;
+    using System.Data.Entity;
 
     public class UnitOfWork 
     {
-        private CourseProjectDbContext context;
+        private DbContext context;
 
         private Repository<City> cityRepository;
         private Repository<Location> locationRepository;
         private Repository<Restaurant> restaurantRepository;
         private Repository<Image> imageRepository;
 
-        public UnitOfWork(CourseProjectDbContext ctx)
+        public UnitOfWork(DbContext ctx)
         {
             context = ctx;
         }
