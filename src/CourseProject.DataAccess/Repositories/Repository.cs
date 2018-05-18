@@ -56,11 +56,23 @@
 
         public void Remove(TEntity entity)
         {
+            if (Context.Entry(entity).State == EntityState.Detached)
+            {
+                Set.Attach(entity);
+            }
+                
             Set.Remove(entity);
         }
 
         public void RemoveRange(IEnumerable<TEntity> entities)
         {
+            foreach (var entity in entities)
+            {
+                if (Context.Entry(entity).State == EntityState.Detached)
+                {
+                    Set.Attach(entity);
+                }
+            }
             Set.RemoveRange(entities);
         }
     }
